@@ -25,4 +25,4 @@ That's it! Feel free to explore and modify the code as needed.
 
 Your feedback is highly appreciated! If you find any issues or have suggestions, please open an issue.
 
-Happy coding! 👩‍💻👨‍💻
+Happy brewing! 👩‍💻👨‍💻
