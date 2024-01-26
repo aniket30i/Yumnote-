@@ -1,0 +1,16 @@
+{
+  "name": "yumnote",
+  "version": "1.0.0",
+  "description": "raw js application recipe finder",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Aniket Saha",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.11.0",
+    "@parcel/transformer-svg": "^2.11.0",
+    "parcel": "^2.11.0"
+  }
+}
