@@ -608,14 +608,13 @@ const controlRecipes = async function() {
         // 2) Rendering recipe
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
     } catch (err) {
-        alert(err);
+        (0, _recipeViewJsDefault.default).renderError();
     }
 };
-//showRecipe();
-[
-    "hashchange",
-    "load"
-].forEach((ev)=>window.addEventListener(ev, controlRecipes));
+const init = function() {
+    (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
+};
+init();
 
 },{"./model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime/runtime":"dXNgZ","core-js/modules/web.immediate.js":"49tUX","./views/recipeView.js":"l60JC"}],"Y4A21":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -645,6 +644,7 @@ const loadRecipe = async function(id) {
         console.log(state.recipe);
     } catch (error) {
         console.error(`{err}`);
+        throw error;
     }
 };
 
@@ -1298,7 +1298,7 @@ const getJSON = async function(url) {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"k5Hzs"}],"49tUX":[function(require,module,exports) {
+},{"./config":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 "use strict";
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("52e9b3eefbbce1ed");
@@ -2538,25 +2538,52 @@ var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class RecipeView {
     #parentElement = document.querySelector(".recipe");
     #data;
+    #errorMessage = "We could not find the recipe, Please try another one!";
+    #message = "";
     render(data) {
         this.#data = data;
-        const markup = this.#generateMarkup();
+        const markup1 = this.#generateMarkup();
         this.#clear();
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup);
+        this.#parentElement.insertAdjacentHTML("afterbegin", markup1);
     }
     #clear() {
         this.#parentElement.innerHTML = "";
     }
     renderSpinner() {
-        const markup = `
+        const markup1 = `
       <div class="spinner">
         <svg>
           <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
         </svg>
       </div>
     `;
-        this.#parentElement.innerHTML = "";
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML("afterbegin", markup1);
+    }
+    renderError(message = this.#errorMessage) {
+        const markup1 = `
+      <div class="error">
+            <div>
+              <svg>
+                <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+    `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML("afterbegin", markup1);
+    }
+    renderMessage(message = this.#message) {
+        this.#clear();
         this.#parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    addHandlerRender(handler) {
+        //showRecipe();
+        [
+            "hashchange",
+            "load"
+        ].forEach((ev)=>window.addEventListener(ev, handler));
     }
     #generateMarkup() {
         return `
